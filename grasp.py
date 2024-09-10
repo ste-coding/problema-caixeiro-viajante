@@ -1,12 +1,9 @@
 import tsplib95
 import random
-from math import sqrt
+import numpy as np
+import argparse
 import time
-import numpy as np # importa numpy
-import argparse #importa para tratar argumentos
-import os
-
-
+from math import sqrt
 
 def lerCoordenadas(arquivo_tsp):
     problema = tsplib95.load(arquivo_tsp)
@@ -56,22 +53,22 @@ def Vizinhaca(solucao):
     return vizinhaca
 
 def buscaLocal(solucao, coordenadas_pontos):
-    historico_custos = [] #inicializa historico de custos
+    historico_custos = []
     while True:
         vizinhaca = Vizinhaca(solucao)
         melhor_vizinha = max(vizinhaca, key=lambda vizinha: calcularQualidade(vizinha, coordenadas_pontos), default=None)
-        custo_atual = calcularQualidade(solucao, coordenadas_pontos) # cria variavel que armazena o custo atual
-        historico_custos.append(-custo_atual) #adiciona ao historico de custos
+        custo_atual = calcularQualidade(solucao, coordenadas_pontos)
+        historico_custos.append(-custo_atual)
 
-        if melhor_vizinha and calcularQualidade(melhor_vizinha, coordenadas_pontos) > custo_atual: #mudei o calcularQualidade(...) para custo_atual pois já foi inicializado lá em cima
+        if melhor_vizinha and calcularQualidade(melhor_vizinha, coordenadas_pontos) > custo_atual:
             solucao = melhor_vizinha
         else:
             break
-    return solucao, historico_custos #retorna o historico de custos tbm
+    return solucao, historico_custos
 
 def GRASP(maxInteracoes, LRC, coordenadas_pontos, alpha=0.1):
     melhorSolucao = None
-    historico_custos = [] # guardar os historicos de custos
+    historico_custos = []
 
     for _ in range(maxInteracoes):
         solucao = construcaoGulosaRandomica(LRC, coordenadas_pontos, alpha)
@@ -80,7 +77,7 @@ def GRASP(maxInteracoes, LRC, coordenadas_pontos, alpha=0.1):
 
         if melhorSolucao is None or calcularQualidade(solucao, coordenadas_pontos) > calcularQualidade(melhorSolucao, coordenadas_pontos):
             melhorSolucao = solucao
-    return melhorSolucao, historico_custos # adiciona historico de custos no return
+    return melhorSolucao, historico_custos
 
 def main():
     parser = argparse.ArgumentParser(description="Executa o algoritmo GRASP para o problema do caixeiro viajante.")
@@ -88,31 +85,41 @@ def main():
     parser.add_argument('maxInteracoes', type=int, help="Número máximo de iterações.")
     parser.add_argument('alpha', type=float, help="Parâmetro alpha para a construção gulosa randomica.")
     parser.add_argument('num_execucoes', type=int, help="Número de execuções do algoritmo.")
-    
+    parser.add_argument('execucao_num', type=int, help="Número da execução atual.")
+    parser.add_argument('--seed', type=int, default=None, help="Seed para reprodutibilidade")
+    parser.add_argument('--output', type=str, required=True, help="Nome do arquivo de saída.")
+
     args = parser.parse_args()
     
-    resultados_existentes = {}
-    if os.path.exists('resultados_grasp.npz'):
-        dados_existentes = np.load('resultados_grasp.npz', allow_pickle=True)
-        resultados_existentes = {k: dados_existentes[k].item() for k in dados_existentes.keys()}
+    if args.seed is not None:
+        random.seed(args.seed)
+        np.random.seed(args.seed)
+
+    coordenadas_pontos = lerCoordenadas(args.arquivo_tsp)
+    LRC = list(coordenadas_pontos.keys())
     
-    for i in range(args.num_execucoes):
-        inicio = time.time()
-        coordenadas_pontos = lerCoordenadas(args.arquivo_tsp)
-        LRC = list(coordenadas_pontos.keys())
-        melhorSolucao, historico_custos = GRASP(args.maxInteracoes, LRC, coordenadas_pontos, args.alpha)
-        distancia_total = -calcularQualidade(melhorSolucao, coordenadas_pontos)
-        tempo_execucao = time.time() - inicio
-        resultado = {
-            'melhor_caminho': melhorSolucao,
-            'distancia_total': distancia_total,
-            'tempo_execucao': tempo_execucao,
-            'historico_custos': historico_custos
-        }
-        
-        resultados_existentes[f'execucao_{i+1}'] = resultado
+    start_time = time.time()
+    melhor_solucao, historico_custos = GRASP(args.maxInteracoes, LRC, coordenadas_pontos, args.alpha)
+    tempo_execucao = time.time() - start_time
     
-    np.savez('resultados_grasp.npz', **resultados_existentes)
+    distancia_total = -calcularQualidade(melhor_solucao, coordenadas_pontos)
+    
+    # Carregar resultados existentes, se houver
+    try:
+        dados_existentes = np.load(args.output, allow_pickle=True)
+        resultados_grasp = dados_existentes['resultados_grasp'].tolist()
+    except FileNotFoundError:
+        resultados_grasp = []
+    
+    resultados_grasp.append({
+        'execucao_num': args.execucao_num,
+        'melhor_caminho': melhor_solucao,
+        'tempo_execucao': tempo_execucao,
+        'distancia_total': distancia_total,
+        'historico_custos': historico_custos
+    })
+    
+    np.savez(args.output, resultados_grasp=resultados_grasp)
 
 if __name__ == "__main__":
     main()
