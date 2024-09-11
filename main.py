@@ -20,11 +20,11 @@ def main():
     seeds = [random.randint(1, 1000000) for _ in range(30)]
     
     # Parâmetros para o GRASP
-    arquivo_tsp = './instancias/berlin52.tsp'
+    arquivo_tsp = './instancias/teste.tsp'
     maxInteracoes = 100
-    alpha_grasp = 0.1
+    alpha_grasp = 0.5
     num_execucoes_grasp = 30
-    output_grasp = 'resultados_grasp.npz'
+    output_grasp = 'resultados_grasp_teste.npz'
 
     # Parâmetros para a Colônia de Formigas
     numero_formigas = 50
@@ -34,7 +34,7 @@ def main():
     alpha_aco = 1
     beta_aco = 2
     num_execucoes_aco = 30
-    output_aco = 'resultados_aco.npz'
+    output_aco = 'resultados_aco_ulysses.npz'
 
     # Executar GRASP
     print("Executando GRASP...")
