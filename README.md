@@ -5,8 +5,13 @@ Este projeto implementa e compara dois algoritmos para resolver o problema do ca
 
 ## Estrutura do Projeto
 
+- **`resultados/`**: Contém arquivos .npz com dados sobre o algoritmo a cada execução
+
+- **`instancias/`**: Contém arquivos de instância do problema TSP.
+
 - **`instancias/`**: Contém arquivos de instância do problema TSP.
   - `berlin52.tsp`
+  - `ulysses16.tsp`
   - `teste.tsp`
   
 - **`main.py`**: Script principal que executa os algoritmos GRASP e Colônia de Formigas com os parâmetros fornecidos.
@@ -16,10 +21,6 @@ Este projeto implementa e compara dois algoritmos para resolver o problema do ca
 - **`aco.py`**: Implementação do algoritmo Colônia de Formigas (ACO) para resolver o TSP.
 
 - **`dados.ipynb`**: Caderno Jupyter para análise dos dados gerados e criação de gráficos.
-
-- **`resultados_grasp.npz`**: Arquivo com os dados extraídos do algoritmo GRASP.
-
-- **`resultados_colonia_formigas.npz`**: Arquivo com os dados extraídos do algoritmo Colônia de Formigas.
 
 - **`requerimentos.txt`**: Arquivo com as dependências necessárias para executar o projeto.
 
@@ -34,7 +35,7 @@ pip install -r requerimentos.txt
 ```
 
 *Executando os Algoritmos*
-GRASP: Para executar o algoritmo GRASP, use o seguinte comando:
+Preencha as informações dos parâmetros desejados no main.py
 
 ```bash
 python main.py grasp <arquivo_tsp> <maxInteracoes> <alpha> <num_execucoes>
@@ -44,16 +45,6 @@ Onde:
 - **`maxInteracoes`**: Número máximo de iterações
 - **`alpha`**: Parâmetro alpha para a construção gulosa randomica
 - **`num_execucoes`**: Número de execuções do algoritmo
-
-
-Colônia de Formigas (ACO): Para executar o algoritmo de Colônia de Formigas, use o seguinte comando:
-
-```bash
-python main.py aco <arquivo_tsp> <numero_formigas> <melhor_rota> <iteracoes> <evaporacao> <alpha> <beta> <num_execucoes>
-```
-Onde:
-
-- **`arquivo_tsp`**: Caminho para o arquivo .tsp (ex.: ./instancias/berlin52.tsp)
 - **`numero_formigas`**: Número de formigas
 - **`melhor_rota`**: Parâmetro alpha para o feromônio
 - **`iteracoes`**: Número de iterações
@@ -61,6 +52,22 @@ Onde:
 - **`alpha`**: Parâmetro alpha para o feromônio
 - **`beta`**: Parâmetro beta para a distância
 - **`num_execucoes`**: Número de execuções do algoritmo
+
+Ou execute cada algoritmo manualmente
+
+
+Colônia de Formigas (ACO): Para executar o algoritmo de Colônia de Formigas, use o seguinte comando:
+
+```bash
+python main.py aco <arquivo_tsp> <numero_formigas> <melhor_rota> <iteracoes> <evaporacao> <alpha> <beta> <num_execucoes>
+```
+
+GRASP: Para executar o algoritmo GRASP, use o seguinte comando:
+
+```bash
+python main.py grasp <arquivo_tsp> <maxInteracoes> <alpha> <num_execucoes>
+```
+
 
 ## Análise dos Resultados
 Após executar os algoritmos, os resultados serão salvos em arquivos .npz (resultados_grasp.npz e resultados_colonia_formigas.npz). Para analisar os dados e criar gráficos, abra o caderno Jupyter `dados.ipynb` e execute as células.
