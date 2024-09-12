@@ -7,7 +7,7 @@ Este projeto implementa e compara dois algoritmos para resolver o problema do ca
 
 - **`resultados/`**: Contém arquivos .npz com dados sobre o algoritmo a cada execução
 
-- **`instancias/`**: Contém arquivos de instância do problema TSP.
+- **`graficos/`**: Contém imagens de alguns gráficos gerados.
 
 - **`instancias/`**: Contém arquivos de instância do problema TSP.
   - `berlin52.tsp`
