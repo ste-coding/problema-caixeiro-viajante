@@ -1,0 +1,49 @@
+#Teste 1 - Matriz 4x5 com 4 pontos de entrega
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+
+# Teste 2 - Matriz 5x5 com 5 pontos de entrega
+5 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+0 0 0 0 E
+
+# Teste 3 - Matriz 5x10 com 6 pontos de entrega
+5 10
+0 E 0 0 0 0 0 A 0 0
+0 0 0 0 0 B 0 0 0 0
+0 0 D 0 0 0 0 0 0 0
+0 F 0 0 0 0 C 0 0 0
+0 0 0 0 0 0 0 0 0 R
+
+# Teste 4 - Matriz 10x8 com 9 pontos de entrega
+10 8
+0 0 A 0 0 0 0 D
+0 B 0 0 E 0 0 0
+0 0 0 0 0 0 F 0
+0 0 0 0 0 G 0 0
+0 0 0 0 0 0 0 0
+H 0 0 0 0 0 0 I
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 J 0 0 0 0
+R 0 0 0 0 0 0 0
+
+
+# Teste 5 - Matriz 11x8 com 10 pontos de entrega
+11 8
+A 0 0 0 0 0 0 0
+0 0 0 0 0 B 0 0
+0 0 C 0 0 0 0 0
+0 0 0 E 0 0 0 0
+0 0 D 0 F 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 G 0
+0 0 0 0 0 0 0 H
+I 0 0 0 J 0 0 0
+0 0 0 0 0 0 0 R
