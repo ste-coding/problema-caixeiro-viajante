@@ -73,6 +73,8 @@ python main.py grasp <arquivo_tsp> <maxInteracoes> <alpha> <num_execucoes>
 Após executar os algoritmos, os resultados serão salvos em arquivos .npz (resultados_grasp.npz e resultados_colonia_formigas.npz). Para analisar os dados e criar gráficos, abra o caderno Jupyter `dados.ipynb` e execute as células.
 
 ## Descrição dos Arquivos
+- main.py: Script principal, centraliza os parâmetros e automatiza a execução consecutiva dos algoritmos, além do armazenamento dos resultados
+- brute_force.py: Implementa o algoritmo de força  bruta para resolução do TSP em pequenas instâncias.
 - grasp.py: Implementa o algoritmo GRASP para resolver o TSP, incluindo a construção gulosa randomica e a busca local.
 - aco.py: Implementa o algoritmo de Colônia de Formigas (ACO) para resolver o TSP, incluindo a atualização do feromônio e a construção do caminho.
 - dados.ipynb: Caderno Jupyter para análise dos resultados e visualização dos dados.
